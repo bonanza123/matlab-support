@@ -28,12 +28,15 @@ RUN apt-get update && apt-get install -y \
     libpng12-dev libfreetype6-dev \
     libblas-dev liblapack-dev gfortran build-essential xorg
 
+
+RUN useradd -ms /bin/bash block
+
 # run the container like a matlab executable 
 ENV PATH="/usr/local/MATLAB/from-host/bin:${PATH}"
+
+USER block
+
 ENTRYPOINT ["matlab", "-logfile /var/log/matlab/matlab.log"]
-
-RUN adduser block -m -s /bin/bash
-
 # default to matlab help
 CMD ["-h"]
 
