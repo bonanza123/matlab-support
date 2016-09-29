@@ -32,6 +32,8 @@ RUN apt-get update && apt-get install -y \
 ENV PATH="/usr/local/MATLAB/from-host/bin:${PATH}"
 ENTRYPOINT ["matlab", "-logfile /var/log/matlab/matlab.log"]
 
+RUN adduser block -m -s /bin/bash
+
 # default to matlab help
 CMD ["-h"]
 
