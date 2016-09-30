@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y \
     libpng12-dev libfreetype6-dev \
     libblas-dev liblapack-dev gfortran build-essential xorg
 
+COPY ./code /tmp/code
 
 RUN useradd -ms /bin/bash block
 
@@ -36,7 +37,6 @@ ENV PATH="/usr/local/MATLAB/from-host/bin:${PATH}"
 
 USER block
 
-ENTRYPOINT ["matlab", "-logfile /var/log/matlab/matlab.log"]
-# default to matlab help
-CMD ["-h"]
+WORKDIR /tmp/code
+ENTRYPOINT ["matlab", "-logfile /var/log/matlab/matlab.log -nodesktop -nosplash -r 'run,exit(0);'"]
 
